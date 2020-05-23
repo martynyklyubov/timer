@@ -1,6 +1,12 @@
 
 from tkinter import *
 import time
+import subprocess
+
+
+
+global COUNT 
+COUNT = 20
 
 fen = Tk()
 fen.title("COUNTDOWN")
@@ -9,21 +15,52 @@ canv.grid(row=0, column=0, rowspan=3, padx=8, pady=8)
 lab = Label(fen, text="", fg="black", bg="orange", font=("Impact", 18))
 lab.grid(row=1, column=0)
 
-global i 
-i = 1
-def start(t=1500):
-    mins, secs = divmod(t, 60)
+TIME = 10
+CLOCKING = None
+
+def start(ltime):
+    global TIME
+    global CLOCKING
+    print("This is global time" + str(TIME))
+    print("This is local start time" + str(ltime))
+    mins, secs = divmod(ltime, 60)
     timer ='{:02d}:{:02d}'.format(mins, secs)
-    i = 1
-    if (i == 1):
-        lab.config(text=timer, font=("Impact", 30))
-        if (t>0):
-            fen.after(1000, start, t-1)
-    else:
-        i = 1
+    if (ltime == 0):
+        subprocess.call(["afplay", "woohoo.wav"])
         lab.config(text="stop", fg="black", bg="orange", font=("Impact", 18))
+    elif (ltime > 0):
+        lab.config(text=timer, font=("Impact", 30))
+        TIME = ltime - 1
+        CLOCKING = fen.after(1000, start, TIME)
+
 lab = Label(fen, text="", fg="black", bg="orange", font=("Impact", 18))
 lab.grid(row=1, column=0)
+
+
+def pause():
+    global CLOCKING
+    global TIME
+    if CLOCKING != None:
+        fen.after_cancel(CLOCKING)
+    
+def reset():
+    global TIME
+    global CLOCKING
+    if CLOCKING != None:
+        fen.after_cancel(CLOCKING)
+    TIME = 10
+    mins, secs = divmod(TIME, 60)
+    timer ='{:02d}:{:02d}'.format(mins, secs)
+    lab.config(text=timer, font=("Impact", 30))
+
+Countdown1 = Button(fen, text="START", command=lambda: start(TIME), fg="black", bg="orange", font=("Impact", 18))
+Countdown1.grid(row=0, column=1, sticky = E)
+Countdown2 = Button(fen, text="PAUSE", command=pause, fg="black", bg="orange", font=("Impact", 18))
+Countdown2.grid(row=1, column=1, sticky = E)
+Countdown3 = Button(fen, text="RESET", command=reset, fg="black", bg="orange", font=("Impact", 18))
+Countdown3.grid(row=2, column=1, sticky = E)
+
+fen.mainloop()
 
 
 # def start(t = 5):
@@ -44,22 +81,6 @@ lab.grid(row=1, column=0)
     #     t -= 1
     # lab.config(text=str(t))
     # print("Time is out!")
-
-def restart():
-    exit()
-
-
-def stop():
-    exit()
-
-Countdown1 = Button(fen, text="START", command=start, fg="black", bg="orange", font=("Impact", 18))
-Countdown1.grid(row=0, column=1, sticky = E)
-Countdown2 = Button(fen, text="STOP", command=stop, fg="black", bg="orange", font=("Impact", 18))
-Countdown2.grid(row=1, column=1, sticky = E)
-Countdown3 = Button(fen, text="RESET", command=stop, fg="black", bg="orange", font=("Impact", 18))
-Countdown3.grid(row=2, column=1, sticky = E)
-
-fen.mainloop()
 
 
 """
