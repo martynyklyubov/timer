@@ -21,8 +21,6 @@ CLOCKING = None
 def start(ltime):
     global TIME
     global CLOCKING
-    print("This is global time" + str(TIME))
-    print("This is local start time" + str(ltime))
     mins, secs = divmod(ltime, 60)
     timer ='{:02d}:{:02d}'.format(mins, secs)
     if (ltime == 0):
