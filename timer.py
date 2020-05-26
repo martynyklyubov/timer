@@ -25,7 +25,7 @@ def start(ltime):
     timer ='{:02d}:{:02d}'.format(mins, secs)
     if (ltime == 0):
         subprocess.call(["afplay", "woohoo.wav"])
-        lab.config(text="stop", fg="black", bg="orange", font=("Impact", 18))
+        lab.config(text="STOP", fg="black", bg="orange", font=("Impact", 18))
     elif (ltime > 0):
         lab.config(text=timer, font=("Impact", 30))
         TIME = ltime - 1
