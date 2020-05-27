@@ -3,12 +3,15 @@ from tkinter import *
 import time
 import subprocess
 
+global COUNT 
+COUNT = 20
+
 fen = Tk()
 fen.title("COUNTDOWN")
-canv = Canvas(fen, height=100, width=200, bg="orange")
+canv = Canvas(fen, height=100, width=300, bg="green")
 canv.grid(row=0, column=0, rowspan=3, padx=8, pady=8)
-lab = Label(fen, text="", fg="black", bg="orange", font=("Impact", 18))
-lab.grid(row=1, column=0)
+lab = Label(fen, text="Press Start", fg="black", bg="orange", font=("Impact", 30))
+lab.grid(row=0, column=0)
 
 TIME = 1500
 CLOCKING = None
@@ -26,8 +29,8 @@ def start(ltime):
         TIME = ltime - 1
         CLOCKING = fen.after(1000, start, TIME)
 
-lab = Label(fen, text="", fg="black", bg="orange", font=("Impact", 18))
-lab.grid(row=1, column=0)
+lab = Label(fen, text="", fg="black", bg="red", font=("Impact", 18))
+lab.grid(row=2, column=0)
 
 
 def pause():
