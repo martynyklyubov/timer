@@ -3,11 +3,6 @@ from tkinter import *
 import time
 import subprocess
 
-
-
-global COUNT 
-COUNT = 20
-
 fen = Tk()
 fen.title("COUNTDOWN")
 canv = Canvas(fen, height=100, width=200, bg="orange")
@@ -15,7 +10,7 @@ canv.grid(row=0, column=0, rowspan=3, padx=8, pady=8)
 lab = Label(fen, text="", fg="black", bg="orange", font=("Impact", 18))
 lab.grid(row=1, column=0)
 
-TIME = 10
+TIME = 1500
 CLOCKING = None
 
 def start(ltime):
@@ -46,10 +41,11 @@ def reset():
     global CLOCKING
     if CLOCKING != None:
         fen.after_cancel(CLOCKING)
-    TIME = 10
+    TIME = 1500
     mins, secs = divmod(TIME, 60)
     timer ='{:02d}:{:02d}'.format(mins, secs)
     lab.config(text=timer, font=("Impact", 30))
+
 
 Countdown1 = Button(fen, text="START", command=lambda: start(TIME), fg="black", bg="orange", font=("Impact", 18))
 Countdown1.grid(row=0, column=1, sticky = E)
